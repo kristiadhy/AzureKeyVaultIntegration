@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureKeyVault1", "AzureKeyVault1\AzureKeyVault1.csproj", "{9B106F02-6510-4007-B263-EF3FAB66448C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureKeyVault2", "AzureKeyVault2\AzureKeyVault2.csproj", "{B16342EC-77E7-4B90-841D-7D6523198E29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B106F02-6510-4007-B263-EF3FAB66448C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B106F02-6510-4007-B263-EF3FAB66448C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B106F02-6510-4007-B263-EF3FAB66448C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B106F02-6510-4007-B263-EF3FAB66448C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16342EC-77E7-4B90-841D-7D6523198E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16342EC-77E7-4B90-841D-7D6523198E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16342EC-77E7-4B90-841D-7D6523198E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16342EC-77E7-4B90-841D-7D6523198E29}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94404F8C-4B21-4AD7-946F-29D552ADC04B}
+	EndGlobalSection
+EndGlobal

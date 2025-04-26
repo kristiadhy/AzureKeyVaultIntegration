@@ -1,0 +1,6 @@
+@AzureKeyVault1_HostAddress = http://localhost:5285
+
+GET {{AzureKeyVault1_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
