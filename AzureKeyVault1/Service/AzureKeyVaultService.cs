@@ -14,6 +14,7 @@ public class AzureKeyVaultService
   {
     _secretClient = AzureKeyVaultHelper.CreateSecretClient(configuration);
 
+    // You can skip this. It's just for retrying the request in case of transient errors.
     _retryPolicy = Policy
         .Handle<Azure.RequestFailedException>()
         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
@@ -22,26 +23,18 @@ public class AzureKeyVaultService
 
   public async Task<string> GetJwtSecretAsync(IConfiguration configuration)
   {
-    string secretKeyName = configuration["JwtSettings:Secret"];
-    if (string.IsNullOrWhiteSpace(secretKeyName))
-    {
-      _logger.LogError("The secret key name is not configured properly.");
-      throw new InvalidOperationException("The secret key name is not configured properly");
-    }
+    // In Azure Key Vault, I named the secret as "JwtSettings--Secret" (It could be anything you want). 
+    // It's the same as "JwtSettings:Secret" in the application configuration (e.g., appsettings.json).
+    // This way, when loading secrets from Key Vault, it will automatically map to "JwtSettings:Secret" in the configuration. (You can see in the AzureKeyVault1 project)
 
-    if (string.IsNullOrEmpty(secretKeyName))
-    {
-      _logger.LogError("The secret key name is not configured properly.");
-      throw new InvalidOperationException("The secret key name is not configured properly");
-    }
-
+    string secretKeyName = "JwtSettings--Secret";
     try
     {
       _logger.LogInformation("Retrieving secret {SecretKeyName} from Key Vault.", secretKeyName);
       var secret = await _retryPolicy.ExecuteAsync(async () =>
       {
-        var secret = await _secretClient.GetSecretAsync(secretKeyName);
-        return secret.Value.Value;
+        var response = await _secretClient.GetSecretAsync(secretKeyName); // Use this line only if you want to get the secret value directly without using retry policy.
+        return response.Value.Value;
       });
       _logger.LogInformation("Successfully retrieved secret {SecretKeyName}.", secretKeyName);
       return secret;
