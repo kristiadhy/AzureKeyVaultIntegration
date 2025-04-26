@@ -1,6 +1,5 @@
 using AzureKeyVault1.Service;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace AzureKeyVault1.Controllers
 {
