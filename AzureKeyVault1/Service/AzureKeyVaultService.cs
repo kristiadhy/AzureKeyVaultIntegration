@@ -21,7 +21,7 @@ public class AzureKeyVaultService
     _logger = logger;
   }
 
-  public async Task<string> GetJwtSecretAsync(IConfiguration configuration)
+  public async Task<string> GetJwtSecretAsync()
   {
     // In Azure Key Vault, I named the secret as "JwtSettings--Secret" (It could be anything you want). 
     // It's the same as "JwtSettings:Secret" in the application configuration (e.g., appsettings.json).
@@ -33,7 +33,7 @@ public class AzureKeyVaultService
       _logger.LogInformation("Retrieving secret {SecretKeyName} from Key Vault.", secretKeyName);
       var secret = await _retryPolicy.ExecuteAsync(async () =>
       {
-        var response = await _secretClient.GetSecretAsync(secretKeyName); // Use this line only if you want to get the secret value directly without using retry policy.
+        var response = await _secretClient.GetSecretAsync(secretKeyName); // Use this line only, if you want to retrieve the secret value directly without applying a retry policy.
         return response.Value.Value;
       });
       _logger.LogInformation("Successfully retrieved secret {SecretKeyName}.", secretKeyName);
