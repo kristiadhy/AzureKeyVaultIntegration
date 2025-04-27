@@ -7,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 services.Configure<JwtSetting>(builder.Configuration.GetSection("JwtSetting"));
 
-services.AddSingleton<AzureKeyVaultService>();
-services.AddSingleton<JwtSecretProviderService>(); // You can call the Jwt secret using this service
+services.AddSingleton<AzureKeyVaultService>(); // You can call the Jwt secret using this service
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

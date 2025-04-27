@@ -7,19 +7,19 @@ namespace AzureKeyVault1.Controllers
   [Route("[controller]")]
   public class WeatherForecastController : ControllerBase
   {
-    private readonly JwtSecretProviderService _jwtTokenProvider;
+    private readonly AzureKeyVaultService _azureKeyVaultService;
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, JwtSecretProviderService jwtTokenProvider)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, AzureKeyVaultService azureKeyVaultService)
     {
       _logger = logger;
-      _jwtTokenProvider = jwtTokenProvider;
+      _azureKeyVaultService = azureKeyVaultService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetJwtSecretKey()
     {
-      var secret = await _jwtTokenProvider.GetSecretAsync();
+      var secret = await _azureKeyVaultService.GetJwtSecretAsync();
       return Ok(secret);
     }
   }
