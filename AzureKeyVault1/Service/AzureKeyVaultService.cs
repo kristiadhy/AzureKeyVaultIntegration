@@ -1,23 +1,15 @@
 ﻿using Azure.Security.KeyVault.Secrets;
 using AzureKeyVault1.Helpers;
-using Polly;
-using Polly.Retry;
 
 namespace AzureKeyVault1.Service;
 public class AzureKeyVaultService
 {
   private readonly SecretClient _secretClient;
-  private readonly AsyncRetryPolicy _retryPolicy;
   private readonly ILogger<AzureKeyVaultService> _logger;
 
   public AzureKeyVaultService(IConfiguration configuration, ILogger<AzureKeyVaultService> logger)
   {
     _secretClient = AzureKeyVaultHelper.CreateSecretClient(configuration);
-
-    // You can skip this. It's just for retrying the request in case of transient errors.
-    _retryPolicy = Policy
-        .Handle<Azure.RequestFailedException>()
-        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
     _logger = logger;
   }
 
@@ -31,13 +23,9 @@ public class AzureKeyVaultService
     try
     {
       _logger.LogInformation("Retrieving secret {SecretKeyName} from Key Vault.", secretKeyName);
-      var secret = await _retryPolicy.ExecuteAsync(async () =>
-      {
-        var response = await _secretClient.GetSecretAsync(secretKeyName); // Use this line only, if you want to retrieve the secret value directly without applying a retry policy.
-        return response.Value.Value;
-      });
+      var secret = await _secretClient.GetSecretAsync(secretKeyName);
       _logger.LogInformation("Successfully retrieved secret {SecretKeyName}.", secretKeyName);
-      return secret;
+      return secret.Value.Value;
     }
     catch (Exception ex)
     {
